@@ -11,3 +11,77 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.btn {
+  -webkit-border-radius: 17;
+  -moz-border-radius: 17;
+  border-radius: 17px;
+  font-family: Poppins;
+  color: #ffffff;
+  font-size: 24px;
+  background: #000c47;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #00007d;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 17px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Heavier shadow */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-with-button {
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 17px;
+  background-color: #f0f0f0; /* Slightly darker background than white */
+  color: #666;
+  margin-right: 10px; /* Space between input and button */
+}
+
+input:disabled {
+  background-color: #e0e0e0; /* Slightly darker background for disabled inputs */
+  cursor: not-allowed;
+}
+
+.copy-button {
+  align-items: center;
+  border: none;
+  border-radius: 17px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  padding: 10px;
+  scale: 0.90;
+  background-color: #f0f0f0;
+}
+
+.copy-button:hover {
+  background-color: #e0e0e0; /* Darker button color on hover */
+}

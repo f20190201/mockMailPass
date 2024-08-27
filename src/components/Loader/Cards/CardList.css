@@ -1,0 +1,39 @@
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between cards */
+  }
+  
+  .card {
+    width: 94%; /* Card takes 100% of the container width */
+    height: 5vh; /* Card height is 5% of the viewport height */
+    background-color: #f8f9fa; /* Slightly darker than white */
+    border-radius: 8px; /* Rounded borders */
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Shadow for better visibility */
+    overflow: scroll; /* Ensures the text doesn't overflow */
+    text-overflow: ellipsis; /* Truncates the text */
+    white-space: nowrap; /* Prevents the text from wrapping */
+  }
+  
+  .card:hover {
+    background-color: #e9ecef; /* Slightly darker background on hover */
+  }
+
+  .inbox-header {
+    margin-bottom: 15px; /* Space between the header and the card list */
+    font-size: 24px; /* Adjust the font size */
+    font-weight: bold; /* Make the header bold */
+    color: #333; /* Darker color for the header */
+    text-align: center; /* Center the header text */
+  }
+
+  .card.expanded {
+    height: auto; /* Let the card expand to fit its content */
+    white-space: normal; /* Allow the text to wrap */
+    padding: 10px; /* Adjust padding to match expanded height */
+  }
+  

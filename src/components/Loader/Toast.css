@@ -1,0 +1,22 @@
+.toast {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90vw;
+    height: 10vh;
+    background-color: #333; /* Dark grey background */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Transition for opacity */
+    z-index: 1000;
+  }
+  
+  .toast-show {
+    opacity: 1;
+  }
+  
