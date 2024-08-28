@@ -16,12 +16,13 @@ Not just that, it also provides you with a disposable inbox, valid for the next 
 ![image](https://github.com/user-attachments/assets/f46392cb-cb2a-4157-8ee6-8bd1838c6e10)
 
 
-![image](https://github.com/user-attachments/assets/39436c16-f693-4d89-97c8-c3a2a760b6e0)
+![Screenshot 2024-08-28 at 6 48 24 PM](https://github.com/user-attachments/assets/da119f61-709a-481a-ad0e-71b5a147c07c)
 
 
-![image](https://github.com/user-attachments/assets/b094959d-4a38-4915-9b2f-37ff686221fa)
+![Screenshot 2024-08-28 at 6 48 47 PM](https://github.com/user-attachments/assets/6d7999bb-3bfb-4f6c-a440-dfe98438f4ed)
 
 
-![image](https://github.com/user-attachments/assets/baf5b270-7572-422a-ac88-24a69c9e47ec)
+![Screenshot 2024-08-28 at 6 49 23 PM](https://github.com/user-attachments/assets/89f992c9-6e05-44fe-afb9-4d77ce1e363b)
+
 
 
