@@ -13,16 +13,31 @@ Not just that, it also provides you with a disposable inbox, valid for the next 
 
 ### Some Snapshots of the extension, up and running
 
-![image](https://github.com/user-attachments/assets/f46392cb-cb2a-4157-8ee6-8bd1838c6e10)
+
+#### The autofill feature in action - automatically detects relevant fields and populates the data
+![Screenshot 2024-08-31 at 1 59 04 PM](https://github.com/user-attachments/assets/574ffe47-c5cf-47b9-9836-82dcf26d5bb6)
 
 
-![Screenshot 2024-08-28 at 6 48 24 PM](https://github.com/user-attachments/assets/da119f61-709a-481a-ad0e-71b5a147c07c)
 
 
-![Screenshot 2024-08-28 at 6 48 47 PM](https://github.com/user-attachments/assets/6d7999bb-3bfb-4f6c-a440-dfe98438f4ed)
+#### The verification link has been successfully sent to the disposable e-mail ID
+![Screenshot 2024-08-31 at 1 59 43 PM](https://github.com/user-attachments/assets/ea3645df-e5c8-46b2-a809-66856b96fac0)
 
 
-![Screenshot 2024-08-28 at 6 49 23 PM](https://github.com/user-attachments/assets/89f992c9-6e05-44fe-afb9-4d77ce1e363b)
+
+#### Our disposable inbox has successfully detected the new verification e-mail
+![Screenshot 2024-08-31 at 2 00 14 PM](https://github.com/user-attachments/assets/114e4f32-527f-4b58-8734-0ff331067ee7)
 
 
+
+#### Voila! We're in!
+![Screenshot 2024-08-31 at 1 57 02 PM](https://github.com/user-attachments/assets/0791e8a4-e0db-4897-955f-1ebcdcc660c4)
+
+
+## TODO
+
+* Website-aware data storage - the extension automatically detects your current website and lists all your past credentials pertaining to that particular URL
+* Subtle toast messages to inform the user about the execution/completion/failure of an action or an event
+* More foolproof ways to detect e-mail & password fields, since some websites have non-generic IDs for those fields   
+* Ability to retrieve pre-existing inbox if you already have a credential
 
