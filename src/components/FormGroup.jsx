@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import Loader from "./Loader/Loader";
 import CardList from "./Loader/Cards/CardList";
-import Toast from '../components/Loader/Toast';
+import Toast from "../components/Loader/Toast";
 
-
-const FormGroup = ({ isValidDataSaved, email, isEmailLoading, password, fillCredentials }) => {
-
+const FormGroup = ({
+  isValidDataSaved,
+  email,
+  isEmailLoading,
+  password,
+  fillCredentials,
+}) => {
   const [showInbox, setShowInbox] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('successful!');
+  const [toastMessage, setToastMessage] = useState("successful!");
+  const [isRefetchClicked, setIsRefetchClicked] = useState(false);
 
   return (
     <>
@@ -22,7 +27,7 @@ const FormGroup = ({ isValidDataSaved, email, isEmailLoading, password, fillCred
           <Loader />
         ) : (
           <div>
-            {showToast && <Toast message={toastMessage}/>}
+            {showToast && <Toast message={toastMessage} />}
             <div className="form-group">
               <div className="input-with-button">
                 <input
@@ -38,7 +43,9 @@ const FormGroup = ({ isValidDataSaved, email, isEmailLoading, password, fillCred
                     navigator.clipboard.writeText(email).then(() => {
                       setToastMessage("Email successfully copied!");
                       setShowToast(true);
-                      setTimeout(() => {setShowToast(false);}, 1000)
+                      setTimeout(() => {
+                        setShowToast(false);
+                      }, 1000);
                     });
                   }}
                 >
@@ -61,7 +68,9 @@ const FormGroup = ({ isValidDataSaved, email, isEmailLoading, password, fillCred
                     navigator.clipboard.writeText(password).then(() => {
                       setToastMessage("Successfully copied!");
                       setShowToast(true);
-                      setTimeout(() => {setShowToast(false);}, 1000)
+                      setTimeout(() => {
+                        setShowToast(false);
+                      }, 1000);
                     });
                   }}
                 >
@@ -92,12 +101,28 @@ const FormGroup = ({ isValidDataSaved, email, isEmailLoading, password, fillCred
           className="form-container"
           style={{
             marginTop: "10%",
+            position: "relative",
           }}
         >
+          <button
+            class="btn"
+            onClick={() => {
+              setIsRefetchClicked(true);
+            }}
+            style={{
+              fontSize: "14px",
+              position: "absolute",
+              top: "3vh",
+              right: "3%",
+              scale: '0.85'
+            }}
+          >
+            Refetch
+          </button>
           <h2 className="inbox-header" style={{ marginTop: "5px" }}>
             Inbox
           </h2>
-          <CardList email={email} password={password} />
+          <CardList isRefetchClicked={isRefetchClicked} setIsRefetchClicked={setIsRefetchClicked} email={email} password={password} />
         </div>
       )}
     </>

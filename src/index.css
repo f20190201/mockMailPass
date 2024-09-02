@@ -23,6 +23,7 @@ code {
   padding: 10px 20px 10px 20px;
   text-decoration: none;
   cursor: pointer;
+  box-shadow: 0 8px 30px #36454f; /* Heavier shadow */
 }
 
 .btn:hover {

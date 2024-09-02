@@ -3,10 +3,11 @@ import "./CardList.css";
 import axios from "axios";
 import DotPulseLoader from "../DotPulseLoader";
 
-const CardList = ({ email, password }) => {
+const CardList = ({ email, password, isRefetchClicked, setIsRefetchClicked }) => {
   const [expandedCard, setExpandedCard] = useState(null);
   const [login, domain] = email.split('@');
   const [latestMessageData, setLatestMessageData] = useState(null);
+  const [displayNoMessageFound, setDisplayNoMessageFound] = useState(false);
 
   const getMessagesOptions = {
     method: 'GET',
@@ -42,24 +43,30 @@ const CardList = ({ email, password }) => {
         const response = await axios.request(readMessageOptions(messageId));
         console.log(response.data.textBody);
         setLatestMessageData([{id: messageId, text: response.data.htmlBody}]);
+        setIsRefetchClicked(false);
         return response.data.textBody;
     } catch (error) {
         console.error(error);
     }
   }
 
-  const filterLatestMessage = (messageArray) => {
+  const filterLatestMessage = (messageArray, fromRefetch) => {
     
     if(messageArray.length) {
         const messageId = messageArray[0].id;
         getMessageData(messageId);
+    } else {
+        if(fromRefetch) {
+            setDisplayNoMessageFound(true);
+            setIsRefetchClicked(false);
+        }
     }
   }
 
-  const handleGetMessages = async () => {
+  const handleGetMessages = async (fromRefetch = false) => {
     try {
         const response = await axios.request(getMessagesOptions);
-        filterLatestMessage(response.data);
+        filterLatestMessage(response.data, fromRefetch);
     } catch (error) {
         console.error(error);
     }
@@ -69,16 +76,36 @@ const CardList = ({ email, password }) => {
     setExpandedCard(id);
   };
 
-  useEffect(() => {
+  const fetchInbox = () => {
     let count = 0;
     const interval = setInterval(() => {
         handleGetMessages();
         count++;
         if(count === 5 || latestMessageData) {
+            if(!latestMessageData) {
+                setDisplayNoMessageFound(true);
+            } else {
+                setDisplayNoMessageFound(false);
+            }
             clearInterval(interval)
         }
     }, 5000)
+  }
+
+
+
+  useEffect(() => {
+    fetchInbox();
+    return () => fetchInbox;
   }, []);
+
+  useEffect(() => {
+    if(isRefetchClicked) {
+        setLatestMessageData(null);
+        setDisplayNoMessageFound(false);
+        handleGetMessages(true);
+    }
+  }, [isRefetchClicked])
 
 
   return (
@@ -91,7 +118,15 @@ const CardList = ({ email, password }) => {
           onClick={() => handleClick(card.id)}
           dangerouslySetInnerHTML={{ __html: card.text }}
         ></div>
-      )) : <DotPulseLoader/>}
+      )) : (displayNoMessageFound ? 
+      
+      <div
+      style={{
+        fontSize: 'larger'
+      }}
+      >
+        Sorry, No E-mail found 
+      </div> : <DotPulseLoader/>)}
 
       
     </div>
