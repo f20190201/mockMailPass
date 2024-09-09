@@ -86,3 +86,18 @@ input:disabled {
 .copy-button:hover {
   background-color: #e0e0e0; /* Darker button color on hover */
 }
+
+@keyframes slideAnimation {
+  0% {
+    transform: translateX(-120%);
+  }
+  40% {
+    transform: translateX(0%);
+  }
+  70% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}

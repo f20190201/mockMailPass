@@ -9,10 +9,11 @@ const FormGroup = ({
   isEmailLoading,
   password,
   fillCredentials,
+  setAnimate,
+  setToastMessage,
+  bgColourRef
 }) => {
   const [showInbox, setShowInbox] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("successful!");
   const [isRefetchClicked, setIsRefetchClicked] = useState(false);
 
   return (
@@ -27,7 +28,6 @@ const FormGroup = ({
           <Loader />
         ) : (
           <div>
-            {showToast && <Toast message={toastMessage} />}
             <div className="form-group">
               <div className="input-with-button">
                 <input
@@ -40,12 +40,10 @@ const FormGroup = ({
                 <button
                   className="copy-button"
                   onClick={() => {
-                    navigator.clipboard.writeText(email).then(() => {
-                      setToastMessage("Email successfully copied!");
-                      setShowToast(true);
-                      setTimeout(() => {
-                        setShowToast(false);
-                      }, 1000);
+                    navigator.clipboard.writeText(email).then(async() => {
+                      setToastMessage("Email ID successfully copied!");
+                      bgColourRef.current = undefined;
+                      await Promise.resolve(setAnimate(true));
                     });
                   }}
                 >
@@ -65,12 +63,10 @@ const FormGroup = ({
                 <button
                   className="copy-button"
                   onClick={() => {
-                    navigator.clipboard.writeText(password).then(() => {
-                      setToastMessage("Successfully copied!");
-                      setShowToast(true);
-                      setTimeout(() => {
-                        setShowToast(false);
-                      }, 1000);
+                    navigator.clipboard.writeText(password).then(async() => {
+                      setToastMessage("Password successfully copied!");
+                      bgColourRef.current = undefined;
+                      await Promise.resolve(setAnimate(true));
                     });
                   }}
                 >

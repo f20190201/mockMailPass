@@ -14,8 +14,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const emailInput = document.querySelector('input[type="email"]');
     const passwordInput = document.querySelector('input[type="password"]');
 
-    console.log({emailInput, passwordInput});
-
     if (emailInput) {
     setValue(emailInput, email);
       console.log("Email input filled:", email);
@@ -25,6 +23,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       console.log("Password input filled:", password);
     }
 
-    sendResponse({ status: "success" });
+    sendResponse({ status: "success background.js" });
   }
 });

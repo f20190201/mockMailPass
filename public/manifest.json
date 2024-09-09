@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MockMailPass",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Generate random email IDs and passwords with a click",
   "permissions": ["activeTab", "scripting", "tabs", "storage"],
   "host_permissions": ["<all_urls>"],
@@ -17,13 +17,13 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "img.png",
-      "48": "img.png",
-      "128": "img.png"
+      "16": "email.png",
+      "48": "email.png",
+      "128": "email.png"
     }
   },
   "icons": {
-    "128": "img.png"
+    "128": "email.png"
   },
   "content_security_policy": {
     "script-src": ["'self'"],

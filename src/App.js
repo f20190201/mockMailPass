@@ -1,15 +1,26 @@
 /* global chrome */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FormGroup from "./components/FormGroup";
 import axios from "axios";
+import Toast from "./components/Loader/Toast";
+import BottomBar from "./components/BottomBar";
+import SavedCredentialsList from "./components/SavedCredentialsList";
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [onLandingPage, setOnLandingPage] = useState(true);
   const [isGenerateCredentialsClicked, setIsGenerateCredentialsClicked] =
     useState(false);
   const [isValidDataSaved, setIsValidDataSaved] = useState(false);
+  const [animate, setAnimate] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const bgColourRef = useRef(null);
+  const [credentialsFilledObj, setCredentialsFilledObj] = useState({
+    email: true,
+    password: true,
+  });
 
   const generateRandomEmailOptions = {
     method: "GET",
@@ -64,14 +75,34 @@ function App() {
     return password;
   }
 
+  const fetchSavedCredentials = (url) => {
+    chrome.storage.sync.get([url], (result) => {
+      return result;
+    })
+  }
+
+  const addCredentialToLocalStorage = (url) => {
+    const sanitizedUrl = url.split("/")[2]; 
+    let savedCredentials = fetchSavedCredentials(sanitizedUrl);
+    savedCredentials = savedCredentials ? savedCredentials[sanitizedUrl] : [];
+    chrome.storage.sync.set({
+      [sanitizedUrl]: [{
+        email: email,
+        password: password
+      } , ...savedCredentials]
+    })
+  }
+
   const fillCredentials = async () => {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     const activeTab = tabs[0];
-    await chrome.tabs.sendMessage(activeTab.id, {
+    const { credentialsSet } = await chrome.tabs.sendMessage(activeTab.id, {
       action: "fillCredentials",
       email,
       password,
     });
+    addCredentialToLocalStorage(activeTab.url);
+    setCredentialsFilledObj(credentialsSet);
   };
 
   const buttonDimensions = {
@@ -86,13 +117,18 @@ function App() {
     try {
       const response = await axios.request(generateRandomEmailOptions);
       setEmail(response.data[0]);
+      const generatedPassword = generatePassword(12);
       await chrome.storage.sync.set(
-        { email: response.data[0], timestamp: Date.now() },
+        {
+          email: response.data[0],
+          timestamp: Date.now(),
+          password: generatedPassword,
+        },
         function () {
           console.log("email set!");
         }
       );
-      setPassword(generatePassword(12));
+      setPassword(generatedPassword);
     } catch (error) {
       console.error(error);
     }
@@ -100,21 +136,39 @@ function App() {
   };
 
   useEffect(() => {
-    chrome.storage.sync.get(["email", "timestamp"], (result) => {
+    chrome.storage.sync.get(["email", "timestamp", "password"], (result) => {
       const currentTime = Date.now();
       const savedTime = result.timestamp;
 
       if (savedTime && currentTime - savedTime <= 600000) {
         setEmail(result.email);
         setIsGenerateCredentialsClicked(true);
+        setPassword(result.password);
         setIsValidDataSaved(true);
       } else {
-        chrome.storage.sync.remove(["email", "timestamp"], () => {
+        chrome.storage.sync.remove(["email", "timestamp", "password"], () => {
           console.log("entry successfully deleted");
         });
       }
     });
+    
   }, []);
+
+  useEffect(() => {
+    const { email, password } = credentialsFilledObj;
+    if (!email && !password) {
+      setToastMessage("Error in autofilling credentials");
+    } else if (!email) {
+      setToastMessage("Error in autofilling Email");
+    } else if (!password) {
+      setToastMessage("Error in autofilling password");
+    }
+
+    if (!email || !password) {
+      bgColourRef.current = "red";
+      setAnimate(true);
+    }
+  }, [credentialsFilledObj]);
 
   return (
     <div
@@ -127,6 +181,7 @@ function App() {
         position: "relative",
       }}
     >
+      {onLandingPage && <div>
       <div
         style={{
           marginBottom: "12%",
@@ -139,7 +194,7 @@ function App() {
           paddingTop: "9%",
           fontWeight: "700",
           borderRadius: "0 0 38px 37px",
-          boxShadow: '0 0 12px 0 #36454f'
+          boxShadow: "0 0 12px 0 #36454f",
         }}
       >
         Mock Email And Password
@@ -161,6 +216,9 @@ function App() {
           email={email}
           isEmailLoading={isEmailLoading}
           password={password}
+          setAnimate={setAnimate}
+          setToastMessage={setToastMessage}
+          bgColourRef={bgColourRef}
         />
       )}
 
@@ -176,6 +234,22 @@ function App() {
           Already have an Email ID?
         </button>
       </div>
+      </div>}
+      
+      {
+        !onLandingPage && <SavedCredentialsList credentialsList={[]} setAnimate={setAnimate} setToastMessage={setToastMessage}  />
+      }
+
+      <Toast
+        animate={animate}
+        setAnimate={setAnimate}
+        message={toastMessage}
+        bgColour={bgColourRef.current ? bgColourRef.current : undefined}
+      />
+      <BottomBar
+        setOnLandingPage={setOnLandingPage}
+        onLandingPage={onLandingPage}
+      />
     </div>
   );
 }
