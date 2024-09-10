@@ -2,7 +2,9 @@
 
 MockMailPass is a comprehensive tool that allows you to generate mock credentials for websites that you require to log in once/want a disposable credential.
 
-Not just that, it also provides you with a disposable inbox, valid for the next hour, that helps you fetch OTPs and verification links.
+Not just that, it also provides you with a disposable inbox, valid for the next hour, that helps you fetch OTPs and verification links. 
+
+MockMailPass provides storage for your already generated credentials, which automatically pops up once you're on the webpage!
 
 ## Features at a glance
 
@@ -10,6 +12,7 @@ Not just that, it also provides you with a disposable inbox, valid for the next 
 * Generates mock passwords - 12 characters strong, with a mix of uppercase, lowercase, numbers and special characters
 * Generates disposable inboxes with automated queries for fetching verification e-mails
 * Access to the disposable mailbox until 10 minutes from the moment of creation
+* Storage for past generated credentials according to URL
 
 ### Some Snapshots of the extension, up and running
 
@@ -32,6 +35,11 @@ Not just that, it also provides you with a disposable inbox, valid for the next 
 
 #### Voila! We're in!
 ![Screenshot 2024-08-31 at 1 57 02 PM](https://github.com/user-attachments/assets/0791e8a4-e0db-4897-955f-1ebcdcc660c4)
+
+
+#### Hey, now you can even retrieve your past credentials that you had generated on this URL!
+![Screenshot 2024-09-10 at 9 09 33 PM](https://github.com/user-attachments/assets/5362f271-0160-42ee-b42c-8662191ce6b8)
+
 
 
 ## TODO
