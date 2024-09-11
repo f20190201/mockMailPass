@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px; /* Space between cards */
+    width: 79vw;
+    overflow-x: scroll;
   }
   
   .card {

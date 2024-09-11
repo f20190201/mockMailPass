@@ -17,6 +17,8 @@ function App() {
   const [animate, setAnimate] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const bgColourRef = useRef(null);
+  const [currentUrl, setCurrentUrl] = useState('');
+  const [savedCredentialsList, setSavedCredentialsList] = useState([]);
   const [credentialsFilledObj, setCredentialsFilledObj] = useState({
     email: true,
     password: true,
@@ -76,21 +78,19 @@ function App() {
   }
 
   const fetchSavedCredentials = (url) => {
-    chrome.storage.sync.get([url], (result) => {
-      return result;
-    })
+    return chrome.storage.sync.get([url]);
   }
 
-  const addCredentialToLocalStorage = (url) => {
+  const addCredentialToLocalStorage = async (url) => {
     const sanitizedUrl = url.split("/")[2]; 
-    let savedCredentials = fetchSavedCredentials(sanitizedUrl);
-    savedCredentials = savedCredentials ? savedCredentials[sanitizedUrl] : [];
+    let savedCredentials = await fetchSavedCredentials(sanitizedUrl);
+    savedCredentials = Object.keys(savedCredentials).length ? savedCredentials[sanitizedUrl]: [];
     chrome.storage.sync.set({
       [sanitizedUrl]: [{
         email: email,
         password: password
       } , ...savedCredentials]
-    })
+    }, () => setSavedCredentialsList((list) => [{email, password}, ...list]));
   }
 
   const fillCredentials = async () => {
@@ -135,7 +135,22 @@ function App() {
     setIsEmailLoading(false);
   };
 
+  async function setUrl() {
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    return await tabs[0].url;
+  }
+
   useEffect(() => {
+    
+    const url = setUrl();
+    url.then(async (val) => {
+      const cleanUrl = val.split('/')[2];
+      setCurrentUrl(cleanUrl);
+      let savedCredentialsData = await fetchSavedCredentials(cleanUrl);
+      savedCredentialsData = Object.keys(savedCredentialsData).length ? savedCredentialsData[cleanUrl] : [];
+      setSavedCredentialsList(savedCredentialsData);
+    });
+    
     chrome.storage.sync.get(["email", "timestamp", "password"], (result) => {
       const currentTime = Date.now();
       const savedTime = result.timestamp;
@@ -151,7 +166,7 @@ function App() {
         });
       }
     });
-    
+
   }, []);
 
   useEffect(() => {
@@ -179,8 +194,11 @@ function App() {
         minWidth: "90vw",
         overflowY: "scroll",
         position: "relative",
+        display: 'grid',
+        gridTemplateRows: '13fr 1fr'
       }}
     >
+      <div>
       {onLandingPage && <div>
       <div
         style={{
@@ -235,17 +253,18 @@ function App() {
         </button>
       </div>
       </div>}
-      
       {
-        !onLandingPage && <SavedCredentialsList credentialsList={[]} setAnimate={setAnimate} setToastMessage={setToastMessage}  />
+        !onLandingPage && <SavedCredentialsList credentialsList={savedCredentialsList} setAnimate={setAnimate} setToastMessage={setToastMessage}  />
       }
-
       <Toast
         animate={animate}
         setAnimate={setAnimate}
         message={toastMessage}
         bgColour={bgColourRef.current ? bgColourRef.current : undefined}
       />
+      </div>
+
+      
       <BottomBar
         setOnLandingPage={setOnLandingPage}
         onLandingPage={onLandingPage}

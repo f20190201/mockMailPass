@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Loader/Cards/CardList.css";
 /* global chrome */
 
 const SavedCredentialsList = ({
   setAnimate,
   setToastMessage,
-  credentialsList,
+  credentialsList = [],
 }) => {
+
+
+    useEffect(() => {
+
+    }, [])
   return (
     <div class="card-list">
       <h2>All your past logins on this URL</h2>

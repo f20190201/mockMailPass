@@ -6,7 +6,7 @@ const BottomBar = ({onLandingPage, setOnLandingPage}) => {
       style={{
         height: "10vh",
         width: "113%",
-        translate: "-6%",
+        // translate: "-6%",
         position: "fixed",
         bottom: "0px",
         zIndex: "100",
