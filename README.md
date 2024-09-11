@@ -44,8 +44,8 @@ MockMailPass provides storage for your already generated credentials, which auto
 
 ## TODO
 
-* Website-aware data storage - the extension automatically detects your current website and lists all your past credentials pertaining to that particular URL
-* Subtle toast messages to inform the user about the execution/completion/failure of an action or an event
+* Website-aware data storage - the extension automatically detects your current website and lists all your past credentials pertaining to that particular URL ✅
+* Subtle toast messages to inform the user about the execution/completion/failure of an action or an event ✅
 * More foolproof ways to detect e-mail & password fields, since some websites have non-generic IDs for those fields   
 * Ability to retrieve pre-existing inbox if you already have a credential
 
